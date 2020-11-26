@@ -41,7 +41,11 @@ module.exports = {
           outputPath: 'images',
           publicPath: '/images',
         }
-      }
+      },
+      {
+        test: /\.html$/,
+        loader: 'html-loader',
+      },
     ]
   },
   optimization: {
