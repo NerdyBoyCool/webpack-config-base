@@ -1,6 +1,8 @@
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+
 module.exports = {
   entry: {
     app: './src/js/app.js',
@@ -26,6 +28,10 @@ module.exports = {
         loader: 'babel-loader',
         test: /\.js$/,
         exclude: /node_modules/,
+      },
+      {
+        test: /\.scss$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
       }
     ]
   },
@@ -57,5 +63,8 @@ module.exports = {
       template: './src/html/another.html',
       chunks: ['another']
     }),
+    new MiniCssExtractPlugin({
+      filename: './css/[name].[contenthash].css'
+    })
   ],
 };
