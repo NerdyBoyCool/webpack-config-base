@@ -11,7 +11,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'js/[name].[contenthash].js',
-    chunkFilename: 'js/[name].[contenthash].js'
+    chunkFilename: 'js/[name].[contenthash].js',
   },
   module: {
     rules: [
@@ -21,8 +21,8 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         options: {
-          fix: true
-        }
+          fix: true,
+        },
       },
       {
         loader: 'babel-loader',
@@ -31,7 +31,12 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ],
       },
       {
         test: /\.(jpe?g|gif|png|svg)$/,
@@ -42,16 +47,24 @@ module.exports = {
               name: '[name].[contenthash].[ext]',
               outputPath: 'images',
               publicPath: '/images',
-            }
+            },
           },
-          'image-webpack-loader'
+          'image-webpack-loader',
         ],
       },
       {
         test: /\.html$/,
         loader: 'html-loader',
       },
-    ]
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+      },
+    ],
+  },
+  resolve: {
+    // importでtsファイルのパス解決をする。この設定により、拡張子を省略できる。
+    extensions: ['.ts', '.js', '.jsx', '.tsx'],
   },
   optimization: {
     splitChunks: {
@@ -66,23 +79,23 @@ module.exports = {
           name: 'vendor-modules',
           minSize: 0,
           minChunks: 2,
-        }
-      }
-    }
+        },
+      },
+    },
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: './src/html/index.html',
-      chunks: ['app']
+      chunks: ['app'],
     }),
     new HtmlWebpackPlugin({
       filename: 'another.html',
       template: './src/html/another.html',
-      chunks: ['another']
+      chunks: ['another'],
     }),
     new MiniCssExtractPlugin({
-      filename: './css/[name].[contenthash].css'
-    })
+      filename: './css/[name].[contenthash].css',
+    }),
   ],
-};
+}
