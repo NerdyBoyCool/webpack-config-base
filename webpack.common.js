@@ -14,6 +14,15 @@ module.exports = {
   module: {
     rules: [
       {
+        enforce: 'pre',
+        loader: 'eslint-loader',
+        test: /\.js$/,
+        exclude: /node_modules/,
+        options: {
+          fix: true
+        }
+      },
+      {
         loader: 'babel-loader',
         test: /\.js$/,
         exclude: /node_modules/,
